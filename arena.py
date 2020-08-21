@@ -104,8 +104,6 @@ async def battle(ctx):
             await ctx.send(cb(f"You have slain {enemy.name}!!!"))
             break
 
-        # await asyncio.sleep(3)
-
         try:
             msg = await bot.wait_for('message', timeout=60.0, check=lambda message: message.author == ctx.author)
         except asyncio.TimeoutError:
