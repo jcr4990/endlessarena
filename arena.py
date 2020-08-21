@@ -9,6 +9,9 @@ import asyncio
 bot = commands.Bot(command_prefix='/')
 # bot.remove_command("help")
 
+def check(m):
+    return m.author.name == name
+
 def cb(content):
     return f"```{content}```"
 
@@ -90,7 +93,7 @@ async def battle(ctx):
         player.hp = player.hp - dmg_received
 
         
-        msg = cb(f"ROUND:{combat_round}\n{player.name} hit for {dmg_dealt} damage!\n{enemy.name} hit for {dmg_received} damage!\n\n{player.name}: {player.hp}/{player.maxhp}hp\n{enemy.name}: {enemy.hp}/{enemy.maxhp}hp")
+        msg = cb(f"ROUND:{combat_round}\n{player.name} hit for {dmg_dealt} damage!\n{enemy.name} hit for {dmg_received} damage!\n\n{player.name}: {player.hp}/{player.maxhp}hp\n{enemy.name}: {enemy.hp}/{enemy.maxhp}hp\n\nType 1 to continue\nType 2 to attempt to flee")
         await ctx.send(msg)
 
         if player.hp <= 0:
@@ -101,9 +104,19 @@ async def battle(ctx):
             await ctx.send(cb(f"You have slain {enemy.name}!!!"))
             break
 
+        # await asyncio.sleep(3)
 
-
-        await asyncio.sleep(3)
+        try:
+            msg = await bot.wait_for('message', timeout=60.0, check=lambda message: message.author == ctx.author)
+        except asyncio.TimeoutError:
+            await ctx.send("Timed out waiting for response - Game Over")
+            break
+        else:
+            if msg.content == "1":
+                await ctx.send("Continuing to next round...")
+            elif msg.content == "2":
+                await ctx.send("You ran away!")
+                break
 
         
     save(name, player)
