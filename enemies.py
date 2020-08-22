@@ -1,8 +1,10 @@
 import random
-from items import Item, Weapon, Armor
+from items import Weapon, Armor
+
 
 class Enemy:
     """Represents an enemy in the game."""
+
     def __init__(self, name, level, inventory):
         self.name = name
         self.hp = 10 + (level * (level // 2))
@@ -25,5 +27,5 @@ class Enemy:
 
 
 enemy_names = ["a mountain lion", "a grizzly bear", "a rattlesnake", "a bandit", "a wolf",
-"an oozing slime", "a fire elemental", "a water elemental", "an air elemental", "an earth elemental",
-"a fire giant", "an ice giant", "a kobold", "a gnoll", "a goblin", "an orc"]
+               "an oozing slime", "a fire elemental", "a water elemental", "an air elemental", "an earth elemental",
+               "a fire giant", "an ice giant", "a kobold", "a gnoll", "a goblin", "an orc"]
