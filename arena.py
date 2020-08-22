@@ -1,11 +1,12 @@
-from discord.ext import commands 
-from bot_token import TOKEN
-from player import Player
-from enemies import Enemy
-from items import Item, Weapon, Armor
 import pickle
 import random
 import asyncio
+from discord.ext import commands
+from bot_token import TOKEN
+from player import Player
+from enemies import Enemy
+from items import Weapon, Armor
+
 
 bot = commands.Bot(command_prefix='/')
 # bot.remove_command("help")
@@ -13,18 +14,23 @@ bot = commands.Bot(command_prefix='/')
 # def check(m):
 #     return m.author.name == name
 
+
 def cb(content):
     return f"```{content}```"
+
 
 def save(filename, var):
     with open(f"data/{filename}.dat", "wb") as f:
         pickle.dump(var, f)
+
 
 def load(filename):
     with open(f"data/{filename}.dat", "rb") as f:
         return pickle.load(f)
 
 # On Message
+
+
 @bot.event
 async def on_message(message):
     """Discord 'on_message' function"""
@@ -32,7 +38,6 @@ async def on_message(message):
         return
 
     # On message logic here
-
 
     await bot.process_commands(message)
 
@@ -76,7 +81,6 @@ async def inventory(ctx):
     for item in player.inventory:
         item_names.append(item.name)
 
-
     newline = "\n"
     msg = cb(f"{player.name}'s Inventory:\n{player.gold} Gold\n{newline.join(item_names)}")
     await ctx.send(msg)
@@ -116,10 +120,8 @@ async def battle(ctx):
             dmg_received = 0
         player.hp = player.hp - dmg_received
 
-
         msg = cb(f"ROUND:{combat_round}\n{player.name} hit for {dmg_dealt} damage!\n{enemy.name} hit for {dmg_received} damage!\n\n{player.name}: {player.hp}/{player.maxhp}hp\n{enemy.name}: {enemy.hp}/{enemy.maxhp}hp\n\n1: Continue\n2: Attempt to flee")
         await ctx.send(msg)
-
 
         if not player.is_alive():
             await ctx.send(cb(f"You have been slain by {enemy.name}."))
@@ -132,7 +134,6 @@ async def battle(ctx):
 
             await ctx.send(cb(f"You have slain {enemy.name}!\nYou loot {enemy.gold} gold from their corpse!"))
             break
-
 
         try:
             msg = await bot.wait_for('message', timeout=60.0, check=lambda message: message.author == ctx.author)
