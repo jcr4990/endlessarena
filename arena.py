@@ -97,7 +97,7 @@ async def battle(ctx):
 
     enemy = Enemy.random(player.level)
     await ctx.send(cb(f"Entering combat with {enemy.name}..."))
-    await asyncio.sleep(3)
+    await asyncio.sleep(2)
 
     while True:
         combat_round += 1
@@ -146,7 +146,7 @@ async def battle(ctx):
                 await ctx.send("You ran away!")
                 break
 
-
+    # Save player object at completion of each battle
     save(name, player)
 
 
