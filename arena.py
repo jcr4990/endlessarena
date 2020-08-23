@@ -58,11 +58,11 @@ async def create(ctx):
     else:
         name = ctx.author.nick
 
-    bronze_dagger = Weapon(name="Bronze Dagger", damage=10, dexterity=15, value=4)
+    bronze_dagger = Weapon(name="Bronze Dagger", damage=10, strength=30, value=4)
     print(f"Name:{bronze_dagger.name} Dmg:{bronze_dagger.damage} Str:{bronze_dagger.strength} Dex:{bronze_dagger.dexterity} Val:{bronze_dagger.value}")
 
     rusty_sword = Weapon("Rusty Sword", 3, 0)
-    rusty_armor = Armor("Rusty Armor", "Chest", 3, 0)
+    rusty_armor = Armor("Rusty Armor", 5, slot="Chest")
     player = Player(name, 1, 1, [rusty_sword, rusty_armor])
     # player.hp = 100
     save(name, player)
