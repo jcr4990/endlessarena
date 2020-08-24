@@ -58,12 +58,11 @@ async def create(ctx):
     else:
         name = ctx.author.nick
 
-    bronze_dagger = Weapon(name="Bronze Dagger", damage=10, strength=30, value=4)
-    print(f"Name:{bronze_dagger.name} Dmg:{bronze_dagger.damage} Str:{bronze_dagger.strength} Dex:{bronze_dagger.dexterity} Val:{bronze_dagger.value}")
 
-    rusty_sword = Weapon("Rusty Sword", 3, 0)
+    rusty_sword = Weapon("Rusty Sword", 140, slot="Primary")
     rusty_armor = Armor("Rusty Armor", 5, slot="Chest")
-    player = Player(name, 1, 1, [rusty_sword, rusty_armor])
+
+    player = Player(name, 40, 1, [rusty_sword, rusty_armor])
     # player.hp = 100
     save(name, player)
 
@@ -123,6 +122,7 @@ async def battle(ctx):
             dmg_received = 0
         player.hp = player.hp - dmg_received
 
+        print(player.mitigation)
         msg = cb(f"ROUND:{combat_round}\n{player.name} hit for {dmg_dealt} damage!\n{enemy.name} hit for {dmg_received} damage!\n\n{player.name}: {player.hp}/{player.maxhp}hp\n{enemy.name}: {enemy.hp}/{enemy.maxhp}hp\n\n1: Continue\n2: Attempt to flee")
         await ctx.send(msg)
 
@@ -152,6 +152,7 @@ async def battle(ctx):
 
     # Save player object at completion of each battle
     save(name, player)
+
 
 
 if __name__ == "__main__":

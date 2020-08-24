@@ -17,6 +17,7 @@ class Player:
         for item in inventory:
             try:
                 self.ac += item.ac
+                self.mitigation = int(self.ac * 0.25)
             except AttributeError:
                 pass
 

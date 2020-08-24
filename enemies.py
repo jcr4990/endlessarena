@@ -9,7 +9,7 @@ class Enemy:
         self.name = name
         self.hp = 10 + (level * (level // 2))
         self.ac = 5 + (level * (level // 3))
-        self.damage = damage = 5 + level
+        self.damage =  5 + level
         self.inventory = inventory
         self.maxhp = self.hp
         self.mitigation = int(self.ac * 0.25)
@@ -21,7 +21,7 @@ class Enemy:
     @staticmethod
     def random(level):
         name = random.choice(enemy_names)
-        gold = random.randint(int((level * 0.8)), int((level * 1.2)))
+        gold = random.randint(int((level * 0.5)), int((level * 1.5) + 5))
         enemy = Enemy(name, level, [])
         return enemy
 
